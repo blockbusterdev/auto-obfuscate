@@ -1,0 +1,14 @@
+{
+  "name": "auto-obfuscation",
+  "version": "0.0.1",
+  "description": "It's a tool to obfuscate single GPC resource file",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Taylor Fuller",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^35.0.1"
+  }
+}
