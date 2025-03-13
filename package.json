@@ -4,11 +4,17 @@
   "description": "It's a tool to obfuscate single GPC resource file",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "compile-scss": "sass assets/scss/style.scss assets/style.css",
+    "start": "nodemon"
   },
   "author": "Taylor Fuller",
   "license": "ISC",
   "devDependencies": {
     "electron": "^35.0.1"
+  },
+  "dependencies": {
+    "nodemon": "^3.1.9",
+    "path": "^0.12.7",
+    "sass": "^1.85.1"
   }
 }
