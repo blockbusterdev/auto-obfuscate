@@ -1,5 +1,5 @@
 {
-  "watch": ["main.js", "index.html", "assets/scss/"],
+  "watch": ["main.js", "index.html", "assets/scss/", "js/"],
   "ignore": ["node_modules/**"],
   "ext": "js,html,scss,json",
   "exec": "npm run compile-scss && electron ."

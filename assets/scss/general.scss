@@ -1,5 +1,35 @@
-@use "const/colors" as *;
+@use "const/colors.scss" as *;
 
-body {
-  background: $dark-color;
+* {
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+  padding: 0.5em 1em;
+  background: $green-color;
+  outline: none;
+  border: none;
+  border-radius: 0.5em;
+  color: $white-color;
+  font-weight: bold;
+}
+
+span {
+  color: $white-color;
+  font-size: 0.7em;
+  font-family: sans-serif;
+  padding: 0.3em 0.5em;
+  background: $sky-color;
+  border-radius: 0.5em;
+}
+
+.display-none {
+  display: none !important;
+}
+.display-block {
+  display: block !important;
+}
+.display-flex {
+  display: flex !important;
 }

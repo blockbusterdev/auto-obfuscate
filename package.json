@@ -5,14 +5,28 @@
   "main": "main.js",
   "scripts": {
     "compile-scss": "sass assets/scss/style.scss assets/style.css",
-    "start": "nodemon"
+    "dev": "nodemon",
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "GPC.Taylor.obfuscator",
+    "productName": "Taylor Fuller",
+    "win": {
+      "target": "nsis"
+    },
+    "directories": {
+      "output": "dist"
+    }
   },
   "author": "Taylor Fuller",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^35.0.1"
+    "electron": "^35.0.1",
+    "electron-builder": "^25.1.8"
   },
   "dependencies": {
+    "fs": "^0.0.1-security",
     "nodemon": "^3.1.9",
     "path": "^0.12.7",
     "sass": "^1.85.1"

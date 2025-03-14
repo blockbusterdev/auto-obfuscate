@@ -1,0 +1,9 @@
+directories:
+  output: dist
+  buildResources: build
+appId: GPC.Taylor.obfuscator
+productName: Taylor Fuller
+win:
+  target: nsis
+files: []
+electronVersion: 35.0.1
