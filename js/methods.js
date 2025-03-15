@@ -35,16 +35,16 @@ const stringfy = string => {
   string = replace(string, ' {', '{'); string = replace(string, '} ', '}')
   string = replace(string, ' ,', ','); string = replace(string, ', ', ',')
   string = replace(string, ' =', '='); string = replace(string, '= ', '=')
-  string = replace(string, ' |', '|'); string = replace(string, '| ', '|')
-  string = replace(string, ' >', '>'); string = replace(string, '> ', '>')
-  string = replace(string, ' <', '<'); string = replace(string, '< ', '<')
-  string = replace(string, ' +', '+'); string = replace(string, '+ ', '+')
-  string = replace(string, ' -', '-'); string = replace(string, '- ', '-')
-  string = replace(string, ' *', '*'); string = replace(string, '* ', '*')
-  string = replace(string, ' /', '/'); string = replace(string, '/ ', '/')
-  string = replace(string, ' ^', '^'); string = replace(string, '^ ', '^')
-  string = replace(string, ' ~', '~'); string = replace(string, '~ ', '~')
-  string = replace(string, ' &', '&'); string = replace(string, '& ', '&')
+  //string = replace(string, ' |', '|'); string = replace(string, '| ', '|')
+  //string = replace(string, ' >', '>'); string = replace(string, '> ', '>')
+  //string = replace(string, ' <', '<'); string = replace(string, '< ', '<')
+  //string = replace(string, ' +', '+'); string = replace(string, '+ ', '+')
+  //string = replace(string, ' -', '-'); string = replace(string, '- ', '-')
+  //string = replace(string, ' *', '*'); string = replace(string, '* ', '*')
+  //string = replace(string, ' /', '/'); string = replace(string, '/ ', '/')
+  //string = replace(string, ' ^', '^'); string = replace(string, '^ ', '^')
+  //string = replace(string, ' ~', '~'); string = replace(string, '~ ', '~')
+  //string = replace(string, ' &', '&'); string = replace(string, '& ', '&')
   string = replace(string, ' (', '('); string = replace(string, '( ', '(')
   string = replace(string, ' )', ')'); string = replace(string, ') ', ')')
   string = replace(string, '  ', ' ')
@@ -67,13 +67,15 @@ const nickFunction = (str) => {
 
   nickID = getRan()
   let array = str.split("function ")
-  for (let i = 1; i < array.length; i++) array[i] = array[i].split('(')[0].trim()
-  array.shift()
-  array = array.sort((a, b) => b.length - a.length)
+  if (array.length > 0) {
+    for (let i = 1; i < array.length; i++) array[i] = array[i].split('(')[0].trim()
+    array.shift()
+    array = array.sort((a, b) => b.length - a.length)
 
-  for (let i = 0; i < array.length; i++) {
-    str = replace(str, `${array[i]}(`, `_${nickID}(`)
-    nickID += getRan()
+    for (let i = 0; i < array.length; i++) {
+      str = replace(str, `${array[i]}(`, `_${nickID}(`)
+      nickID += getRan()
+    }
   }
 
   return str
@@ -118,11 +120,36 @@ const nickControllerConsts = str => {
     let regex = new RegExp(`\\b${controllers[i][0]}\\b`, "g")
 
     controllers[i][2] = `_${nickID}`
-    str = `const int _${nickID}=${controllers[i][1]};\n` +
-      str.replaceAll(regex, controllers[i][2])
+    str = str.replaceAll(regex, controllers[i][2])
     nickID += getRan()
   }
-  return str
+
+  let array = str.split("define ")
+  if (array.length > 0) {
+    array.shift()
+    for (let i = 0; i < array.length; i++) {
+      array[i] = array[i].split(';')[0].trim()
+      str = str.replace(`define ${array[i]};\n`, '')
+      str = str.replace(`define ${array[i]};`, '')
+      let [name, controll] = array[i].split("=")
+      let regex = new RegExp(`\\b${name}\\b`, "g")
+      str = str.replaceAll(regex, controll)
+    }
+  }
+
+  //Add enum to the front of the resource
+  controllers = controllers.sort((a, b) => a[1] - b[1])
+  let enumStr = `enum{`
+  for (let i = 0; i < controllers.length; i++) {
+    if (i === 0)
+      enumStr += `${controllers[i][2]}=${controllers[i][1]},`
+    else if (i === (controllers.length - 1))
+      enumStr += `${controllers[i][2]}}\n`
+    else
+      enumStr += `${controllers[i][2]},`
+  }
+
+  return `${enumStr}${str}`
 }
 
 /**
@@ -131,10 +158,9 @@ const nickControllerConsts = str => {
  * @returns {string} resource uglified
  */
 const uglify = str => {
-  str = str.replaceAll('\n\n', '\n')
   str = str.replaceAll('\n}', '}')
   str = str.replaceAll('}\n', '}')
-  str = str.replaceAll('}\n', '}')
   str = str.replaceAll('{\n', '{')
+  str = str.replaceAll('\n\n', '\n')
   return str
 }

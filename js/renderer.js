@@ -17,7 +17,6 @@ ipcRenderer.on("selected-file", async (event, path) => {
 //Event when read file from file-input dialog
 ipcRenderer.on("read-success", async (event, data) => {
   let string = stringfy(data[1].trim()) //make array as string removing junk lines
-
   string = nickFunction(string) //Apply nickname to function
 
   string = nickValue(string, 'int') //Apply nickname to int value
@@ -28,10 +27,8 @@ ipcRenderer.on("read-success", async (event, data) => {
   string = nickValue(string, 'char') //Apply nickname to char value
   string = nickValue(string, 'bool') //Apply nickname to bool value
   string = nickValue(string, 'combo') //Apply nickname to combo value
-  string = nickValue(string, 'define') //Apply nickname to combo value
 
   string = nickControllerConsts(string) //Obfuscating for combo
-
   string = uglify(string) //Obfuscating for combo
 
   let path = `${data[0].trim().substr(0, data[0].trim().length - 4)}-result.${data[0].trim().substr(-3)}`
