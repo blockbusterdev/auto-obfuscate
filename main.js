@@ -28,7 +28,7 @@ ipcMain.on("to-open-file-input", async (event) => {
 	const result = await dialog.showOpenDialog({
 		title: "Select a File",
 		properties: ["openFile"], // Allow only file selection
-		filters: [{ name: "GCP files", extensions: ["gcp", "cpp", "txt"] }] // ✅ Restrict to .txt files
+		filters: [{ name: "GPC files", extensions: ["gpc", "cpp", "txt"] }] // ✅ Restrict to .txt files
 	})
 
 	// Send selected file path back to parsing processor
