@@ -31,6 +31,17 @@ const getRan = () => {
 const stringfy = string => {
   if (!string) return ""
 
+  //Remove /* ----- */
+  let array = string.split('/*')
+  for (let i = 0; i < array.length; i++) {
+    array[i] = array[i].split('*/')[0]
+    string = string.replace(`/*${array[i]}*/`, '')
+  }
+
+  //Remove // -------
+  array = string.split('\n'); string = ""
+  for (let i = 0; i < array.length; i++) string += `${array[i].split('//')[0].trim()}\n`
+
   string = replace(string, '\t', ' ')
   string = replace(string, ' {', '{'); string = replace(string, '} ', '}')
   string = replace(string, ' ,', ','); string = replace(string, ', ', ',')
@@ -52,9 +63,7 @@ const stringfy = string => {
   string = replace(string, '; ', ';')
   string = replace(string, '\n(', '(')
 
-  let array = string.split('\n'); string = ""
-  for (let i = 0; i < array.length; i++) string += `${array[i].split('//')[0].trim()}\n`
-  return replace(string, '\n\n', '\n')
+  return string
 }
 
 /**
@@ -67,6 +76,7 @@ const nickFunction = (str) => {
 
   nickID = getRan()
   let array = str.split("function ")
+
   if (array.length > 0) {
     for (let i = 1; i < array.length; i++) array[i] = array[i].split('(')[0].trim()
     array.shift()
@@ -154,13 +164,13 @@ const nickControllerConsts = str => {
 
 /**
  * Function to finally uglify the resource
- * @param {string} str 
+ * @param {string} str
  * @returns {string} resource uglified
  */
 const uglify = str => {
   str = str.replaceAll('\n}', '}')
   str = str.replaceAll('}\n', '}')
   str = str.replaceAll('{\n', '{')
-  str = str.replaceAll('\n\n', '\n')
+  str = replace(str, '\n\n', '\n')
   return str
 }
